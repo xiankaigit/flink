@@ -52,6 +52,11 @@ public final class KubernetesApplicationClusterEntrypoint extends ApplicationClu
     }
 
     public static void main(final String[] args) {
+        String arg_param= StringUtils.join(args, ",");
+        String className = Thread.currentThread().getStackTrace()[1].getClassName();
+        int idx = className.lastIndexOf(".")+1;
+        String simpleName =className.substring(idx);
+        LOG.info(simpleName+" commond line is "+arg_param);
         // startup checks and logging
         EnvironmentInformation.logEnvironmentInfo(
                 LOG, KubernetesApplicationClusterEntrypoint.class.getSimpleName(), args);

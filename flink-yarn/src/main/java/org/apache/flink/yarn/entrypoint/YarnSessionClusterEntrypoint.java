@@ -18,6 +18,8 @@
 
 package org.apache.flink.yarn.entrypoint;
 
+import org.apache.commons.lang.StringUtils;
+
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.runtime.entrypoint.ClusterEntrypoint;
 import org.apache.flink.runtime.entrypoint.ClusterEntrypointUtils;
@@ -56,6 +58,11 @@ public class YarnSessionClusterEntrypoint extends SessionClusterEntrypoint {
     }
 
     public static void main(String[] args) {
+        String arg_param= StringUtils.join(args, ",");
+        String className = Thread.currentThread().getStackTrace()[1].getClassName();
+        int idx = className.lastIndexOf(".")+1;
+        String simpleName =className.substring(idx);
+        LOG.info(simpleName+" commond line is "+arg_param);
         // startup checks and logging
         EnvironmentInformation.logEnvironmentInfo(
                 LOG, YarnSessionClusterEntrypoint.class.getSimpleName(), args);

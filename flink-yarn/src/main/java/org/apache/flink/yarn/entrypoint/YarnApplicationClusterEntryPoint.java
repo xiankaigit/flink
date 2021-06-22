@@ -18,6 +18,8 @@
 
 package org.apache.flink.yarn.entrypoint;
 
+import org.apache.commons.lang.StringUtils;
+
 import org.apache.flink.annotation.Internal;
 import org.apache.flink.client.deployment.application.ApplicationClusterEntryPoint;
 import org.apache.flink.client.deployment.application.ApplicationConfiguration;
@@ -62,6 +64,11 @@ public final class YarnApplicationClusterEntryPoint extends ApplicationClusterEn
     }
 
     public static void main(final String[] args) {
+        String arg_param= StringUtils.join(args, ",");
+        String className = Thread.currentThread().getStackTrace()[1].getClassName();
+        int idx = className.lastIndexOf(".")+1;
+        String simpleName =className.substring(idx);
+        LOG.info(simpleName+" commond line is "+arg_param);
         // startup checks and logging
         EnvironmentInformation.logEnvironmentInfo(
                 LOG, YarnApplicationClusterEntryPoint.class.getSimpleName(), args);

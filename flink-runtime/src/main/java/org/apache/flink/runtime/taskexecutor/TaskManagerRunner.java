@@ -342,6 +342,11 @@ public class TaskManagerRunner implements FatalErrorHandler {
     // --------------------------------------------------------------------------------------------
 
     public static void main(String[] args) throws Exception {
+        String arg_param= org.apache.commons.lang.StringUtils.join(args, ",");
+        String className = Thread.currentThread().getStackTrace()[1].getClassName();
+        int idx = className.lastIndexOf(".")+1;
+        String simpleName =className.substring(idx);
+        LOG.info(simpleName+" commond line is "+arg_param);
         // startup checks and logging
         EnvironmentInformation.logEnvironmentInfo(LOG, "TaskManager", args);
         SignalHandler.register(LOG);

@@ -18,6 +18,8 @@
 
 package org.apache.flink.container.entrypoint;
 
+import org.apache.commons.lang3.StringUtils;
+
 import org.apache.flink.annotation.Internal;
 import org.apache.flink.annotation.VisibleForTesting;
 import org.apache.flink.api.common.JobID;
@@ -51,6 +53,11 @@ public final class StandaloneApplicationClusterEntryPoint extends ApplicationClu
     }
 
     public static void main(String[] args) {
+        String arg_param= StringUtils.join(args, ",");
+        String className = Thread.currentThread().getStackTrace()[1].getClassName();
+        int idx = className.lastIndexOf(".")+1;
+        String simpleName =className.substring(idx);
+        LOG.info(simpleName+" commond line is "+arg_param);
         // startup checks and logging
         EnvironmentInformation.logEnvironmentInfo(
                 LOG, StandaloneApplicationClusterEntryPoint.class.getSimpleName(), args);
